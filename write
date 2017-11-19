@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Journal names will comprise of the day they were for and the 
+# Example: "Sunday Nov 19 2017 - The Day I Started Journaling.md"
+#	        "WWWWWW MMM DD YYYY - {---------TITLE?-----------}.md"
+
+today=`date '+%a %b %d %Y'`
+
+# Add a title to the script if one is specified
+if ! [ -z "$1" ]; then
+	filename="$today - $1.md"
+else
+	filename="$today.md"
+fi
+
+entry_time=`date '+ %H:%M:%S'`
+
+# If the file doesn't exist create it
+# Also add the title (filename sans extension ".md")
+if ! [ -e "$filename" ]; then
+	touch "$filename"
+	echo "# ${filename:0:${#filename}-3}" >> "$filename"
+fi
+
+# Add the time that an entry is being made to the file
+echo "" >> "$filename"
+echo "### $entry_time" >> "$filename"
+
+# Open the file and move the cursor to a new line at the end
+# Also switch to insert mode on the new line
+vi "+ normal G o" +startinsert "$filename"
