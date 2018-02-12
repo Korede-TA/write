@@ -28,4 +28,4 @@ echo "### $entry_time" >> "$filename"
 
 # Open the file and move the cursor to a new line at the end
 # Also switch to insert mode on the new line
-vi "+ normal G o" +startinsert "$filename"
+vi "+ normal G o" +startinsert "$filename" -c ":Goyo"
